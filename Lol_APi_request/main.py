@@ -6,20 +6,21 @@ import RiotConsts as Consts
 dfile = open("apikey.txt", "r")
 development_api_key = dfile.readline()
 dfile.close()
-region = str(input("Region, Type eun1, or euw1"))
+
 summonername = str(input("Your summoner name:"))
+region = str(input("Your region eun1 or euw1: "))
 
 #development_api_key = input("Enter your api-key: ")
 #development_api_key = 'RGAPI-cd1d3fcf-c2ae-4c92-9eb8-f8b24a943ea7'
 #matchlist request
-def request_matchlist(accountId, champion, region = region, version=Consts.API_VERSION['summoner']):
+def request_matchlist(accountId, champion, region, version=Consts.API_VERSION['summoner']):
     URL = 'https://' + region + '.api.riotgames.com/lol/match/v' + version + '/matchlists/by-account/' + accountId + '?champion=' + champion + "&api_key=" + development_api_key
     print (URL)
     response = requests.get(URL)
     return response.json()
 #main
 def main():
-    api = RiotAPI(development_api_key)
+    api = RiotAPI(development_api_key, region)
     r = api.get_summoner_by_name(summonername)
     accountId = r['accountId']
     print ('AccountID:', r['accountId'], '\n', 'id:', r['id'] )
@@ -28,7 +29,7 @@ def main():
 #Kilépési lehetőség
     if gomb == 1: 
         champion = str(input("Champion's code: "))
-        r = request_matchlist(accountId, champion)
+        r = request_matchlist(accountId, champion, region)
         lista = r['matches']
         lista2 = lista[0]
         gameId = lista2['gameId']

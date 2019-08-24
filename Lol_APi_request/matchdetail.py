@@ -12,7 +12,7 @@ summonername = str(input("Your summoner name:"))
 #delimeter
 d = ";"
 
-def request_matchdetail(matchId, region=Consts.REGIONS['europe_nordic_and_east'], version=Consts.API_VERSION['summoner']):
+def request_matchdetail(matchId, region, version=Consts.API_VERSION['summoner']):
     URL = 'https://' + region + '.api.riotgames.com/lol/match/v' + version + '/matches/' + matchId + "?api_key=" + development_api_key
     print (URL)
     response = requests.get(URL)
@@ -24,7 +24,7 @@ def main():
     rownumber = int(input("Row number for the match: "))
     lineList = [line.rstrip('\n') for line in open(f, "r")]
     print(lineList[rownumber])
-    r = request_matchdetail(lineList[rownumber])
+    r = request_matchdetail(lineList[rownumber], region)
     lista = r['participantIdentities']
     for x in lista:
         player = x['player']
