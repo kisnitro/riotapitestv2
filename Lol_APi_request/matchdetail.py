@@ -4,6 +4,7 @@ import RiotConsts as Consts
 dfile = open("apikey.txt", "r")
 development_api_key = dfile.readline()
 dfile.close()
+region = str(input("Region, Type eun1, or euw1"))
 summonername = str(input("Your summoner name:"))
 
 
